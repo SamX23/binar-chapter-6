@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A landing page games" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/icon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/icon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/icon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/assets/icon/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/assets/icon/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="apple-mobile-web-app-title" content="Simple Javascript Games" />
+    <meta name="application-name" content="Simple Javascript Games" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/styles/style.css" rel="stylesheet" />
+  </head>
+  <body id="login-form" class="d-flex">
+    <div class="container bg-dark m-auto px-5 py-5 rounded-3">
+      <h1 class="text-white">LOGIN TO PLAY GAMES</h1>
+      <form class="my-5" method="POST" action="/">
+        <div class="row">
+          <label for="name" class="form-label text-white">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            aria-describedby="nameHelp"
+            placeholder="John Doe"
+            required
+          />
+          <div id="nameHelp" class="form-text">Use your real names.</div>
+        </div>
+
+        <div class="row">
+          <label for="email" class="form-label text-white">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            aria-describedby="emailHelp"
+            placeholder="email@domain.com"
+            required
+          />
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="password" class="form-label text-white">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            aria-describedby="passwordHelp"
+            placeholder="*******"
+            required
+          />
+          <div id="passwordHelp" class="form-text">
+            Use a proper password and easy to remember.
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <button class="btn btn-primary" type="submit">Login/Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
