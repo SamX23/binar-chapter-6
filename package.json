@@ -1,0 +1,12 @@
+{
+  "name": "html-games",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/SamX23/binar-chapter-6",
+  "author": "sami",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}
