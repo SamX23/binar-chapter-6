@@ -7,16 +7,60 @@
     <title>Admin games page</title>
   </head>
   <body>
-    <h1>ADMIN PAGE</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    {% if admin != null %}
+    <div class="container">
+      <div class="row">
+        <h1>ADMIN PAGE</h1>
+        <p>Hello, <%= admin %>!</p>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary">Create</button>
+          <button class="btn btn-info">Save</button>
+          <button class="btn btn-warning">Update</button>
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+      <div class="row">
+        <table>
+          <title>User Game Table</title>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Password</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <table>
+          <title>User Game Biodata</title>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <table>
+          <title>User Game History</title>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Time</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
   </body>
 </html>
