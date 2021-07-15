@@ -2,7 +2,7 @@
   "development": {
     "username": "sami",
     "password": "qweoiu@#23",
-    "database": "binar_challenge6",
+    "database": "binar_challenge",
     "host": "localhost",
     "dialect": "postgres"
   },
@@ -16,7 +16,7 @@
   "production": {
     "username": "sami",
     "password": "qweoiu@#23",
-    "database": "binar_challenge6",
+    "database": "binar_challenge",
     "host": "localhost",
     "dialect": "postgres"
   }
