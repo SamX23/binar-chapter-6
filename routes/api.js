@@ -19,7 +19,7 @@ app.post("/v1/createuser", (req, res, next) => {
     .then((user) => {
       res.status(201).redirect("/");
     })
-    .catch((err) => res.status(422).json("Cannot create games"));
+    .catch((err) => res.status(422).send("Cannot create users"));
 });
 
 // READ /user
@@ -51,7 +51,7 @@ app.put("/v1/users/:id", (req, res, next) => {
     .then((user) => {
       res.status(201).json(user);
     })
-    .catch((err) => res.status(422).json("Cannot update the games"));
+    .catch((err) => res.status(422).send("Cannot update the games"));
 });
 
 // Delete /user/:id
@@ -62,7 +62,7 @@ app.delete("/v1/users/:id", (req, res) => {
         message: `Users id of ${req.params.id} has been deleted!`,
       });
     })
-    .catch((err) => res.status(422).json("Cannot delete the games id"));
+    .catch((err) => res.status(422).send("Cannot delete the games id"));
 });
 
 module.exports = app;
