@@ -13,7 +13,7 @@ app.use(
 // CREATE /user
 app.post("/v1/createuser", (req, res, next) => {
   User.create({
-    name: req.body.name,
+    username: req.body.username,
     password: req.body.password,
   })
     .then((user) => {
@@ -23,20 +23,18 @@ app.post("/v1/createuser", (req, res, next) => {
 });
 
 // READ /user
-app.get("/v1/usesr", (req, res, next) => {
+app.get("/v1/users", (req, res, next) => {
   User.findAll().then((user) => {
-    res.status(200).json(user);
+    user.length == 0
+      ? res.status(200).send("No users yet!")
+      : res.status(200).json(user);
   });
 });
 
 // READ /user/:id
 app.get("/v1/users/:id", (req, res, next) => {
-  User.findOne({ where: { id: req.params.id } }).then((game) => {
-    if (game) {
-      res.status(200).json(game);
-    } else {
-      res.status(200).send("ID not found");
-    }
+  User.findOne({ where: { id: req.params.id } }).then((user) => {
+    user ? res.status(200).json(user) : res.status(200).send("ID not found");
   });
 });
 
@@ -44,22 +42,22 @@ app.get("/v1/users/:id", (req, res, next) => {
 app.put("/v1/users/:id", (req, res, next) => {
   User.update(
     {
-      name: req.body.name,
+      username: req.body.username,
       password: req.body.password,
       score: req.body.score,
     },
     { where: { id: req.params.id } }
   )
-    .then((game) => {
-      res.status(201).json(game);
+    .then((user) => {
+      res.status(201).json(user);
     })
     .catch((err) => res.status(422).json("Cannot update the games"));
 });
 
 // Delete /user/:id
-app.delete("/games/:id", (req, res) => {
+app.delete("/v1/users/:id", (req, res) => {
   User.destroy({ where: { id: req.params.id } })
-    .then((game) => {
+    .then((user) => {
       res.status(201).json({
         message: `Users id of ${req.params.id} has been deleted!`,
       });
