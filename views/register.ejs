@@ -37,8 +37,8 @@
   </head>
   <body id="login-form" class="d-flex">
     <div class="container bg-dark m-auto px-5 py-5 rounded-3">
-      <h1 class="text-white">LOGIN TO PLAY GAMES</h1>
-      <form class="my-5" method="POST" action="/">
+      <h1 class="text-white">REGISTER TO PLAY GAMES</h1>
+      <form class="my-5" method="POST" action="/v1/createuser">
         <div class="row">
           <label for="name" class="form-label text-white">Name</label>
           <input
@@ -51,22 +51,6 @@
             required
           />
           <div id="nameHelp" class="form-text">Use your real names.</div>
-        </div>
-
-        <div class="row">
-          <label for="email" class="form-label text-white">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            aria-describedby="emailHelp"
-            placeholder="email@domain.com"
-            required
-          />
-          <div id="emailHelp" class="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
 
         <div class="row">
@@ -86,7 +70,7 @@
         </div>
 
         <div class="row my-5">
-          <button class="btn btn-primary" type="submit">Login</button>
+          <button class="btn btn-primary" type="submit">Register</button>
         </div>
       </form>
     </div>

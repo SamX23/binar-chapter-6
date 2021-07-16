@@ -1,53 +1,70 @@
 const express = require("express");
-let users = require("../db/user.json");
 const app = express();
+const { User } = require("../models");
 
 app.use(express.Router());
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
 
-// Get /user
-app.get("/v1/user", (req, res, next) => res.json(users));
-app.get("/v1/user/:id", (req, res, next) => {
-  const user = users.find((item) => item.id === +req.params.id);
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(200).send("ID not found");
-  }
-});
-
-// Post /user
-app.post("/v1/user", (req, res, next) => {
-  const { name, email, password } = req.body;
-  const id = users[users.length - 1].id + 1;
-  const user = {
-    id,
-    name,
-    email,
-    password,
-  };
-
-  users.push(user);
-  res.status(201).json(user);
-});
-
-app.put("/v1/user/:id", (req, res, next) => {
-  const user = users.find((item) => item.id === +req.params.id);
-  const params = {
+// CREATE /user
+app.post("/v1/createuser", (req, res, next) => {
+  User.create({
     name: req.body.name,
-    email: req.body.email,
     password: req.body.password,
-  };
-  user = { ...user, ...params };
-  users = users.map((item) => (item.id === user.id ? user : item));
-  res.status(200).json(user);
+  })
+    .then((user) => {
+      res.status(201).json(user).send("User Created");
+    })
+    .catch((err) => res.status(422).json("Cannot create games"));
 });
 
-app.delete("/v1/user/:id", (req, res, next) => {
-  users = users.filter((item) => item.id !== +req.params.id);
-  res.status(200).json({
-    message: `Users id of ${req.params.id} has been deleted!`,
+// READ /user
+app.get("/v1/usesr", (req, res, next) => {
+  User.findAll().then((user) => {
+    res.status(200).json(user);
   });
+});
+
+// READ /user/:id
+app.get("/v1/users/:id", (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } }).then((game) => {
+    if (game) {
+      res.status(200).json(game);
+    } else {
+      res.status(200).send("ID not found");
+    }
+  });
+});
+
+// Update /user/:id
+app.put("/v1/users/:id", (req, res, next) => {
+  User.update(
+    {
+      name: req.body.name,
+      password: req.body.password,
+      score: req.body.score,
+    },
+    { where: { id: req.params.id } }
+  )
+    .then((game) => {
+      res.status(201).json(game);
+    })
+    .catch((err) => res.status(422).json("Cannot update the games"));
+});
+
+// Delete /user/:id
+app.delete("/games/:id", (req, res) => {
+  User.destroy({ where: { id: req.params.id } })
+    .then((game) => {
+      res.status(201).json({
+        message: `Users id of ${req.params.id} has been deleted!`,
+      });
+    })
+    .catch((err) => res.status(422).json("Cannot delete the games id"));
 });
 
 module.exports = app;
