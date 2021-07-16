@@ -40,33 +40,19 @@
       <h1 class="text-white">LOGIN TO PLAY GAMES</h1>
       <form class="my-5" method="POST" action="/">
         <div class="row">
-          <label for="name" class="form-label text-white">Name</label>
+          <label for="username" class="form-label text-white">Username</label>
           <input
             type="text"
             class="form-control"
-            id="name"
-            name="name"
+            id="username"
+            name="username"
             aria-describedby="nameHelp"
-            placeholder="John Doe"
+            placeholder="yourusername"
+            pattern="[a-z0-9-_\.]+"
+            minlength="4"
             required
           />
-          <div id="nameHelp" class="form-text">Use your real names.</div>
-        </div>
-
-        <div class="row">
-          <label for="email" class="form-label text-white">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            aria-describedby="emailHelp"
-            placeholder="email@domain.com"
-            required
-          />
-          <div id="emailHelp" class="form-text">
-            We'll never share your email with anyone else.
-          </div>
+          <div id="nameHelp" class="form-text">Use a unique usernames.</div>
         </div>
 
         <div class="row">
@@ -78,6 +64,7 @@
             name="password"
             aria-describedby="passwordHelp"
             placeholder="*******"
+            minlength="4"
             required
           />
           <div id="passwordHelp" class="form-text">

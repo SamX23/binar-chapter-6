@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
 
   res.render("index", {
     title: "Traditional Games",
-    name: user.username || "Player",
+    name: user.username,
   });
 });
 
