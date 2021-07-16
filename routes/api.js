@@ -17,7 +17,7 @@ app.post("/v1/createuser", (req, res, next) => {
     password: req.body.password,
   })
     .then((user) => {
-      res.status(201).json(user).send("User Created");
+      res.status(201).redirect("/");
     })
     .catch((err) => res.status(422).json("Cannot create games"));
 });
