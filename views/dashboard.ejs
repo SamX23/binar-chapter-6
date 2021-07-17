@@ -36,38 +36,42 @@
               <title>User Game Table</title>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Id</th>
                   <th>Username</th>
                   <th>Password</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <% user.map(item => { %>
+                <% if(user.length) { %> <% user.map(item => { %>
                 <tr>
                   <th><%= item.id %></th>
                   <th><%= item.username %></th>
                   <th><%= item.password %></th>
                   <th>
-                    <button
+                    <a
                       type="button"
-                      class="btn btn-warning"
+                      class="btn btn-warning editButton"
                       data-bs-toggle="modal"
                       data-bs-target="#updateModal"
+                      data-bs-id="<%= item.id %>"
+                      href="../dashboard/edit/<%= item.id %>"
                     >
                       Update
-                    </button>
-                    <button
+                    </a>
+                    <a
                       type="button"
-                      class="btn btn-danger"
+                      class="btn btn-danger deleteButton"
                       data-bs-toggle="modal"
                       data-bs-target="#deleteModal"
+                      data-bs-id="<%= item.id %>"
+                      href="../dashboard/delete/<%= item.id %>"
                     >
                       Delete
                     </button>
                   </th>
                 </tr>
-                <% }) %>
+                <% }) %> <% } %>
               </tbody>
             </table>
           </div>
