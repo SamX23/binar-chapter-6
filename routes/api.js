@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const { User } = require("../models");
 
-app.use(express.Router());
-
 // CREATE /user
 app.post("/v1/createuser", (req, res, next) => {
   User.create({

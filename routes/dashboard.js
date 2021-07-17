@@ -4,7 +4,9 @@ const { User } = require("../models");
 
 // READ dashboard page
 app.get("/dashboard", (req, res, next) => {
-  User.findAll().then((user) =>
+  User.findAll({
+    order: [["id", "ASC"]],
+  }).then((user) =>
     res.status(200).render("dashboard", { title: "Dashboard Page", user })
   );
 });
