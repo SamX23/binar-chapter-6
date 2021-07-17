@@ -39,11 +39,11 @@
     <div class="form-signin d-flex h-100">
       <div class="bg-dark m-auto px-5 py-5 rounded-3">
         <h1 class="text-white">Register to play</h1>
-        <form class="my-5" method="POST" action="/">
+        <form class="my-5" method="POST" action="/register">
           <div class="form-floating">
             <input
               type="text"
-              class="form-control"
+              class="form-control <% if (username) { %> is-invalid <% } %>"
               id="username"
               name="username"
               placeholder="yourusername"
@@ -53,6 +53,9 @@
               required
             />
             <label for="username">Username</label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Username exist, try another one.
+            </div>
           </div>
           <div id="nameHelp" class="form-text mb-2">
             Use a unique usernames.
