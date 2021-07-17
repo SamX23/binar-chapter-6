@@ -50,15 +50,7 @@ app.post("/dashboard/delete/:id", (req, res, next) => {
 });
 
 // HANDLE REDIRECTION READ if any access this page
-app.get("/dashboard/add", (req, res, next) => {
-  User.findAll().then((user) => res.status(200).redirect("/dashboard"));
-});
-
-app.get("/dashboard/edit", (req, res, next) => {
-  User.findAll().then((user) => res.status(200).redirect("/dashboard"));
-});
-
-app.get("/dashboard/delete", (req, res, next) => {
+app.get("/dashboard/*", (req, res) => {
   User.findAll().then((user) => res.status(200).redirect("/dashboard"));
 });
 
