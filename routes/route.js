@@ -53,4 +53,9 @@ router.get("/register", (req, res, next) =>
   res.render("register", { title: "Register Page" })
 );
 
+// Admin Page
+router.get("/dashboard", (req, res, next) =>
+  res.render("dashboard", { title: "Dashboard Page" })
+);
+
 module.exports = router;

@@ -35,47 +35,53 @@
     <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/styles/style.css" rel="stylesheet" />
   </head>
-  <body id="login-form" class="d-flex">
-    <div class="container bg-dark m-auto px-5 py-5 rounded-3">
-      <h1 class="text-white">REGISTER TO PLAY GAMES</h1>
-      <form class="my-5" method="POST" action="/">
-        <div class="row">
-          <label for="username" class="form-label text-white">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            name="username"
-            aria-describedby="nameHelp"
-            placeholder="yourusername"
-            pattern="[a-z0-9-_\.]+"
-            minlength="4"
-            required
-          />
-          <div id="nameHelp" class="form-text">Use a unique usernames.</div>
-        </div>
+  <body id="login-form">
+    <div class="form-signin d-flex h-100">
+      <div class="bg-dark m-auto px-5 py-5 rounded-3">
+        <h1 class="text-white">Register to play</h1>
+        <form class="my-5" method="POST" action="/">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              placeholder="yourusername"
+              pattern="[a-z0-9-_\.]+"
+              minlength="4"
+              aria-describedby="nameHelp"
+              required
+            />
+            <label for="username">Username</label>
+          </div>
+          <div id="nameHelp" class="form-text mb-2">
+            Use a unique usernames.
+          </div>
 
-        <div class="row">
-          <label for="password" class="form-label text-white">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            aria-describedby="passwordHelp"
-            placeholder="*******"
-            minlength="4"
-            required
-          />
-          <div id="passwordHelp" class="form-text">
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              aria-describedby="passwordHelp"
+              placeholder="*******"
+              minlength="4"
+              required
+            />
+            <label for="password">Password</label>
+          </div>
+          <div id="passwordHelp" class="form-text mb-2">
             Use a proper password and easy to remember.
           </div>
-        </div>
 
-        <div class="row my-5">
-          <button class="btn btn-primary" type="submit">Register</button>
-        </div>
-      </form>
+          <div class="py-2">
+            <button class="btn btn-lg btn-primary" type="submit">
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
