@@ -1,14 +1,7 @@
 [
   {
     "id": 1,
-    "name": "sami",
-    "email": "yahoo@gmail.com",
-    "password": "rahasia"
-  },
-  {
-    "id": 2,
-    "name": "kalamallah",
-    "email": "gmail@yahoo.com",
-    "password": "rahasia"
+    "name": "admin",
+    "password": "admin"
   }
 ]

@@ -3,12 +3,6 @@ const app = express();
 const { User } = require("../models");
 
 app.use(express.Router());
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: false,
-  })
-);
 
 // CREATE /user
 app.post("/v1/createuser", (req, res, next) => {
