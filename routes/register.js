@@ -1,14 +1,21 @@
 const express = require("express");
 const app = express.Router();
 const { User } = require("../models");
+const bcrypt = require("bcrypt");
 
 // Register Page
 app.get("/register", (req, res) => {
-  const exist = req.query.msg;
-  res.render("register", { title: "Register Page", username: exist });
+  const msg = req.query.msg;
+  res.render("register", { title: "Register Page", userExist: msg });
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const userData = {
+    username: req.body.username,
+    password: hashedPassword,
+  };
+
   User.findOne({
     where: {
       username: req.body.username,
@@ -16,10 +23,7 @@ app.post("/register", (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        User.create({
-          username: req.body.username,
-          password: req.body.password,
-        })
+        User.create(userData)
           .then((user) => {
             res.status(201).redirect("/?user=" + user.username);
           })

@@ -44,7 +44,7 @@
           <div class="form-floating">
             <input
               type="text"
-              class="form-control"
+              class="form-control <% if (wrong) { %> is-invalid <% } %>"
               id="username"
               name="username"
               placeholder="yourusername"
@@ -54,6 +54,9 @@
               required
             />
             <label for="username">Username</label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Wrong username, please input the correct one.
+            </div>
           </div>
           <div id="nameHelp" class="form-text mb-2">
             Use a unique usernames.
@@ -62,7 +65,7 @@
           <div class="form-floating">
             <input
               type="password"
-              class="form-control"
+              class="form-control <% if (wrong) { %> is-invalid <% } %>"
               id="password"
               name="password"
               aria-describedby="passwordHelp"
@@ -71,6 +74,9 @@
               required
             />
             <label for="password">Password</label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Wrong password, please input the correct one.
+            </div>
           </div>
           <div id="passwordHelp" class="form-text mb-2">
             Use a proper password and easy to remember.
