@@ -1,5 +1,7 @@
 "use strict";
-const { Model, Deferrable } = require("sequelize");
+const { Model } = require("sequelize");
+const user_game_biodata = require("./user_game_biodata");
+
 module.exports = (sequelize, DataTypes) => {
   class User_game extends Model {
     /**
@@ -23,5 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User_game",
     }
   );
+  User_game.hasMany(user_game_biodata, {
+    foreignKey: "user_id",
+  });
   return User_game;
 };

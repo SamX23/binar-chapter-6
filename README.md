@@ -10,7 +10,9 @@
 
 ### How to use :
 
-- Make sure you have installed sequelize-cli
+Make sure you have installed sequelize-cli
+
+- <code>yarn</code>
 - <code>sequelize db:migrate</code>
 - <code>sequelize db:seed:all</code>
 - <code>yarn start</code>

@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const { User_game } = require("../models");
+const { User_game, User_game_biodata } = require("../models");
 
 // CREATE /user
-app.post("/v1/users", (req, res, next) =>
+app.post("/v1/users", (req, res) =>
   User_game.create({
     username: req.body.username,
     password: req.body.password,
@@ -13,7 +13,7 @@ app.post("/v1/users", (req, res, next) =>
 );
 
 // READ /user
-app.get("/v1/users", (req, res, next) =>
+app.get("/v1/users", (req, res) =>
   User_game.findAll().then((user) =>
     user.length == 0
       ? res.status(200).send("No users yet!")
@@ -22,14 +22,14 @@ app.get("/v1/users", (req, res, next) =>
 );
 
 // READ /user/:id
-app.get("/v1/users/:id", (req, res, next) =>
+app.get("/v1/users/:id", (req, res) =>
   User_game.findOne({ where: { id: req.params.id } }).then((user) =>
     user ? res.status(200).json(user) : res.status(200).send("ID not found")
   )
 );
 
 // Update /user/:id
-app.put("/v1/users/edit/:id", (req, res, next) =>
+app.put("/v1/users/edit/:id", (req, res) =>
   User_game.update(
     {
       username: req.body.username,
@@ -51,6 +51,41 @@ app.delete("/v1/users/delete/:id", (req, res) =>
       })
     )
     .catch(() => res.status(422).send("Cannot delete the games id"))
+);
+
+// CREATE /user/profile
+app.post("/v1/users/profile", (req, res) =>
+  User_game_biodata.create()
+    .then((user) => res.status(201).json(user))
+    .catch(() => res.status(422).send("Cannot create users"))
+);
+
+// READ /user/profile
+app.get("/v1/users/profile", (req, res) =>
+  User_game_biodata.findAll().then((row) =>
+    row.length == 0
+      ? res.status(200).send("No users yet!")
+      : res.status(200).json(row)
+  )
+);
+
+// READ /user/profile/:id
+app.get("/v1/users/profile/:id", (req, res) =>
+  User_game_biodata.findOne({ where: { id: req.params.id } }).then((user) =>
+    user ? res.status(200).json(user) : res.status(200).send("ID not found")
+  )
+);
+
+// Update /user/profile/:id
+app.put("/v1/users/profile/edit/:id", (req, res) =>
+  User_game_biodata.update({}, { where: { id: req.params.id } })
+    .then((user) => res.status(201).json(user))
+    .catch(() => res.status(422).send("Cannot update the games"))
+);
+
+// Delete /user/profile/:id
+app.delete("/v1/users/profile/delete/:id", (req, res) =>
+  User_game_biodata.destroy({ where: { id: req.params.id } })
 );
 
 module.exports = app;

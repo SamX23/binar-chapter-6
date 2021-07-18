@@ -486,6 +486,9 @@ footer {
       #08090a 99.74%
     ),
     url("../assets/images/main-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .form-signin .checkbox {
