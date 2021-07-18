@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 // READ
 app.get("/dashboard", (req, res) => {
-  const msg = req.query.msg;
+  const usererr = req.query.usererr;
 
   if (req.query.user == "admin") {
     User_game.findAll({
@@ -13,7 +13,11 @@ app.get("/dashboard", (req, res) => {
     }).then((user) =>
       res
         .status(200)
-        .render("dashboard", { title: "Dashboard Page", user, exist: msg })
+        .render("dashboard", {
+          title: "Dashboard Page",
+          user,
+          userexist: usererr,
+        })
     );
   } else if (req.query.user != "admin") {
     res.redirect("/dashboard-user");
@@ -42,32 +46,58 @@ app.post("/dashboard/add", async (req, res) => {
             .catch((err) => {
               res.status(422).send("Cannot create user:", err);
             })
-        : res.redirect("/dashboard?user=admin&msg=userexist");
+        : res.redirect("/dashboard?user=admin&usererr=true");
     })
     .catch((err) => res.send("ERROR: " + err));
 });
 
 // UPDATE
 app.post("/dashboard/edit/:id", async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const username = req.body.username;
+  const password = req.body.password;
+  const hashedPassword = await bcrypt.hash(password, 10);
   const userData = {
-    username: req.body.username,
+    username: username,
     password: hashedPassword,
   };
 
+  const updateData = async (data) =>
+    await User_game.update(data, { where: { id: req.params.id } })
+      .then(() => {
+        res.status(201).redirect("/dashboard?user=admin");
+      })
+      .catch((err) => res.status(422).send("Cannot update user: ", err));
+
+  const findUsername = async (username) =>
+    await User_game.findOne({
+      where: {
+        username: username,
+      },
+    });
+
   User_game.findOne({
     where: {
-      username: req.body.username,
+      id: req.params.id,
     },
   })
-    .then((user) => {
-      !user
-        ? User_game.update(userData, { where: { id: req.params.id } })
-            .then(() => {
-              res.status(201).redirect("/dashboard?user=admin");
-            })
-            .catch((err) => res.status(422).send("Cannot update user: ", err))
-        : res.redirect("/dashboard?user=admin&msg=userupdateexist");
+    .then((id) => {
+      if (username != "" && password != "") {
+        findUsername(username).then((dbUser) => {
+          if (!dbUser) {
+            updateData(userData);
+          }
+          res.redirect("/dashboard?user=admin&usererr=true");
+        });
+      } else if (username != "" && password == "") {
+        findUsername(username).then((dbUser) => {
+          if (!dbUser) {
+            updateData({ username: username });
+          }
+          res.redirect("/dashboard?user=admin&usererr=true");
+        });
+      } else if (username == "" && password != "") {
+        updateData({ password: hashedPassword });
+      }
     })
     .catch((err) => res.send("ERROR: " + err));
 });

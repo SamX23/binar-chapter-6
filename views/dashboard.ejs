@@ -17,6 +17,9 @@
         <div class="row">
           <h1>Dashboard</h1>
           <p>Hello, Admin!</p>
+          <% if(userexist) { %>
+          <div class="alert alert-danger" role="alert">Username exist !</div>
+          <% } %>
         </div>
         <div class="row">
           <div class="col">
