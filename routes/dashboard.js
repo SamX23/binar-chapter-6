@@ -3,7 +3,7 @@ const app = express.Router();
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
 
-// READ dashboard page
+// READ
 app.get("/dashboard", (req, res) => {
   const msg = req.query.msg;
 
@@ -21,7 +21,6 @@ app.get("/dashboard", (req, res) => {
 });
 
 // CREATE
-// CREATE users by send post to dashboard/add
 app.post("/dashboard/add", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const userData = {
@@ -35,23 +34,20 @@ app.post("/dashboard/add", async (req, res) => {
     },
   })
     .then((user) => {
-      if (!user) {
-        User.create(userData)
-          .then(() => {
-            res.status(201).redirect("/dashboard?user=admin");
-          })
-          .catch((err) => {
-            res.status(422).send("Cannot create user:", err);
-          });
-      } else {
-        res.redirect("/dashboard?user=admin&msg=userexist");
-      }
+      !user
+        ? User.create(userData)
+            .then(() => {
+              res.status(201).redirect("/dashboard?user=admin");
+            })
+            .catch((err) => {
+              res.status(422).send("Cannot create user:", err);
+            })
+        : res.redirect("/dashboard?user=admin&msg=userexist");
     })
     .catch((err) => res.send("ERROR: " + err));
 });
 
 // UPDATE
-// UPDATE users by send put to dashboard/edit/:id
 app.post("/dashboard/edit/:id", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const userData = {
@@ -65,15 +61,13 @@ app.post("/dashboard/edit/:id", async (req, res) => {
     },
   })
     .then((user) => {
-      if (!user) {
-        User.update(userData, { where: { id: req.params.id } })
-          .then(() => {
-            res.status(201).redirect("/dashboard?user=admin");
-          })
-          .catch((err) => res.status(422).send("Cannot update user: ", err));
-      } else {
-        res.redirect("/dashboard?user=admin&msg=userupdateexist");
-      }
+      !user
+        ? User.update(userData, { where: { id: req.params.id } })
+            .then(() => {
+              res.status(201).redirect("/dashboard?user=admin");
+            })
+            .catch((err) => res.status(422).send("Cannot update user: ", err))
+        : res.redirect("/dashboard?user=admin&msg=userupdateexist");
     })
     .catch((err) => res.send("ERROR: " + err));
 });
@@ -81,9 +75,7 @@ app.post("/dashboard/edit/:id", async (req, res) => {
 // DELETE
 app.post("/dashboard/delete/:id", (req, res) =>
   User.destroy({ where: { id: req.params.id } })
-    .then(() => {
-      res.status(201).redirect("/dashboard?user=admin");
-    })
+    .then(() => res.status(201).redirect("/dashboard?user=admin"))
     .catch(() => res.status(422).send("Cannot delete the games id"))
 );
 
