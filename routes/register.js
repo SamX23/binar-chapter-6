@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { User } = require("../models");
+const { User_game } = require("../models");
 const bcrypt = require("bcrypt");
 
 // Register Page
@@ -15,14 +15,14 @@ app.post("/register", async (req, res) => {
     password: hashedPassword,
   };
 
-  User.findOne({
+  User_game.findOne({
     where: {
       username: req.body.username,
     },
   })
     .then((user) => {
       !user
-        ? User.create(userData)
+        ? User_game.create(userData)
             .then((user) => res.status(201).redirect("/?user=" + user.username))
             .catch((err) => res.status(422).send("Cannot create users:", err))
         : res.redirect("/register?msg=userexist");

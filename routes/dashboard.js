@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { User } = require("../models");
+const { User_game } = require("../models");
 const bcrypt = require("bcrypt");
 
 // READ
@@ -8,7 +8,7 @@ app.get("/dashboard", (req, res) => {
   const msg = req.query.msg;
 
   if (req.query.user == "admin") {
-    User.findAll({
+    User_game.findAll({
       order: [["id", "ASC"]],
     }).then((user) =>
       res
@@ -28,14 +28,14 @@ app.post("/dashboard/add", async (req, res) => {
     password: hashedPassword,
   };
 
-  User.findOne({
+  User_game.findOne({
     where: {
       username: req.body.username,
     },
   })
     .then((user) => {
       !user
-        ? User.create(userData)
+        ? User_game.create(userData)
             .then(() => {
               res.status(201).redirect("/dashboard?user=admin");
             })
@@ -55,14 +55,14 @@ app.post("/dashboard/edit/:id", async (req, res) => {
     password: hashedPassword,
   };
 
-  User.findOne({
+  User_game.findOne({
     where: {
       username: req.body.username,
     },
   })
     .then((user) => {
       !user
-        ? User.update(userData, { where: { id: req.params.id } })
+        ? User_game.update(userData, { where: { id: req.params.id } })
             .then(() => {
               res.status(201).redirect("/dashboard?user=admin");
             })
@@ -74,14 +74,16 @@ app.post("/dashboard/edit/:id", async (req, res) => {
 
 // DELETE
 app.post("/dashboard/delete/:id", (req, res) =>
-  User.destroy({ where: { id: req.params.id } })
+  User_game.destroy({ where: { id: req.params.id } })
     .then(() => res.status(201).redirect("/dashboard?user=admin"))
     .catch(() => res.status(422).send("Cannot delete the games id"))
 );
 
 // HANDLE REDIRECTION READ if any access this page
 app.get("/dashboard/*", (req, res) =>
-  User.findAll().then(() => res.status(200).redirect("/dashboard?user=admin"))
+  User_game.findAll().then(() =>
+    res.status(200).redirect("/dashboard?user=admin")
+  )
 );
 
 module.exports = app;

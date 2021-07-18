@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { User } = require("../models");
+const { User_game } = require("../models");
 const bcrypt = require("bcrypt");
 
 // Login Page
@@ -9,7 +9,7 @@ app.get("/login", (req, res, next) =>
 );
 
 app.get("/login/auth", (req, res, next) =>
-  User.findOne({
+  User_game.findOne({
     where: {
       username: req.query.username,
     },
