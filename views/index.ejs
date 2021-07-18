@@ -86,10 +86,7 @@
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link text-uppercase"
-                  aria-current="page"
-                  href="/logout"
+                <a class="nav-link text-uppercase" aria-current="page" href="/"
                   >logout</a
                 >
               </li>
@@ -125,7 +122,16 @@
 
           <div class="hero_Button m-auto">
             <button type="button" class="btn">
-              <a href="/games">TRIAL</a>
+              <a
+                href="
+              <% if (name) { %>
+                /games
+              <% } else { %>
+                /login
+              <% } %>
+              "
+                >TRIAL</a
+              >
             </button>
           </div>
         </div>

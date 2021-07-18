@@ -11,9 +11,19 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="d-flex" style="min-height: 100vh">
-    <main class="m-auto" style="min-width: 60rem">
-      <div class="container">
+  <body>
+    <nav class="nav d-flex justify-content-between w-100 py-2 px-5">
+      <a
+        class="btn btn-primary text-light text-decoration-none"
+        href="/?user=admin"
+        >Back</a
+      >
+      <a class="btn btn-secondary text-light text-decoration-none" href="/"
+        >Logout</a
+      >
+    </nav>
+    <main>
+      <div class="container py-5">
         <div class="row">
           <h1>Dashboard</h1>
           <p>Hello, Admin!</p>
@@ -34,48 +44,56 @@
                 Create
               </button>
             </div>
-            <table class="table table-hover bordered">
-              <title>User Game Table</title>
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% if(user.length) { %> <% user.map(item => { %>
-                <tr>
-                  <th><%= item.id %></th>
-                  <th><%= item.username %></th>
-                  <th>*********</th>
-                  <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning editButton"
-                      data-bs-toggle="modal"
-                      data-bs-target="#updateModal"
-                      data-bs-id="<%= item.id %>"
-                      href="../dashboard/edit/<%= item.id %>"
-                    >
-                      Update
-                    </a>
-                    <a
-                      type="button"
-                      class="btn btn-danger deleteButton"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteModal"
-                      data-bs-id="<%= item.id %>"
-                      href="../dashboard/delete/<%= item.id %>"
-                    >
-                      Delete
-                    </a>
-                  </th>
-                </tr>
-                <% }) %> <% } %>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table
+                class="
+                  table table-hover table-light table-striped
+                  align-middle
+                  bordered
+                  my-2
+                "
+              >
+                <thead class="table-primary text-center">
+                  <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(user.length) { %> <% user.map(item => { %>
+                  <tr>
+                    <th><%= item.id %></th>
+                    <th><%= item.username %></th>
+                    <th>*********</th>
+                    <th class="text-center">
+                      <a
+                        type="button"
+                        class="btn btn-warning editButton"
+                        data-bs-toggle="modal"
+                        data-bs-target="#updateModal"
+                        data-bs-id="<%= item.id %>"
+                        href="../dashboard/edit/<%= item.id %>"
+                      >
+                        Update
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-danger deleteButton"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        data-bs-id="<%= item.id %>"
+                        href="../dashboard/delete/<%= item.id %>"
+                      >
+                        Delete
+                      </a>
+                    </th>
+                  </tr>
+                  <% }) %> <% } %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
