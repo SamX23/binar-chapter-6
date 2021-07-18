@@ -9,7 +9,7 @@ app.post("/v1/users", (req, res, next) =>
     password: req.body.password,
   })
     .then((user) => res.status(201).json(user))
-    .catch((err) => res.status(422).send("Cannot create users"))
+    .catch(() => res.status(422).send("Cannot create users"))
 );
 
 // READ /user
@@ -29,7 +29,7 @@ app.get("/v1/users/:id", (req, res, next) =>
 );
 
 // Update /user/:id
-app.put("/v1/users/:id", (req, res, next) =>
+app.put("/v1/users/edit/:id", (req, res, next) =>
   User_game.update(
     {
       username: req.body.username,
@@ -39,18 +39,18 @@ app.put("/v1/users/:id", (req, res, next) =>
     { where: { id: req.params.id } }
   )
     .then((user) => res.status(201).json(user))
-    .catch((err) => res.status(422).send("Cannot update the games"))
+    .catch(() => res.status(422).send("Cannot update the games"))
 );
 
 // Delete /user/:id
-app.delete("/v1/users/:id", (req, res) =>
+app.delete("/v1/users/delete/:id", (req, res) =>
   User_game.destroy({ where: { id: req.params.id } })
-    .then((user) =>
+    .then(() =>
       res.status(201).json({
         message: `Users id of ${req.params.id} has been deleted!`,
       })
     )
-    .catch((err) => res.status(422).send("Cannot delete the games id"))
+    .catch(() => res.status(422).send("Cannot delete the games id"))
 );
 
 module.exports = app;
