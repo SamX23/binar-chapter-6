@@ -7,13 +7,17 @@ const bcrypt = require("bcrypt");
 app.get("/dashboard", (req, res) => {
   const msg = req.query.msg;
 
-  User.findAll({
-    order: [["id", "ASC"]],
-  }).then((user) =>
-    res
-      .status(200)
-      .render("dashboard", { title: "Dashboard Page", user, exist: msg })
-  );
+  if (req.query.user == "admin") {
+    User.findAll({
+      order: [["id", "ASC"]],
+    }).then((user) =>
+      res
+        .status(200)
+        .render("dashboard", { title: "Dashboard Page", user, exist: msg })
+    );
+  } else if (req.query.user != "admin") {
+    res.redirect("/dashboard-user");
+  }
 });
 
 // CREATE
@@ -33,19 +37,17 @@ app.post("/dashboard/add", async (req, res) => {
     .then((user) => {
       if (!user) {
         User.create(userData)
-          .then((user) => {
-            res.status(201).redirect("/dashboard");
+          .then(() => {
+            res.status(201).redirect("/dashboard?user=admin");
           })
           .catch((err) => {
             res.status(422).send("Cannot create user:", err);
           });
       } else {
-        res.redirect("/dashboard?msg=userexist");
+        res.redirect("/dashboard?user=admin&msg=userexist");
       }
     })
-    .catch((err) => {
-      res.send("ERROR: " + err);
-    });
+    .catch((err) => res.send("ERROR: " + err));
 });
 
 // UPDATE
@@ -65,31 +67,29 @@ app.post("/dashboard/edit/:id", async (req, res) => {
     .then((user) => {
       if (!user) {
         User.update(userData, { where: { id: req.params.id } })
-          .then((user) => {
-            res.status(201).redirect("/dashboard");
+          .then(() => {
+            res.status(201).redirect("/dashboard?user=admin");
           })
           .catch((err) => res.status(422).send("Cannot update user: ", err));
       } else {
-        res.redirect("/dashboard?msg=userupdateexist");
+        res.redirect("/dashboard?user=admin&msg=userupdateexist");
       }
     })
-    .catch((err) => {
-      res.send("ERROR: " + err);
-    });
+    .catch((err) => res.send("ERROR: " + err));
 });
 
 // DELETE
-app.post("/dashboard/delete/:id", (req, res) => {
+app.post("/dashboard/delete/:id", (req, res) =>
   User.destroy({ where: { id: req.params.id } })
-    .then((user) => {
-      res.status(201).redirect("/dashboard");
+    .then(() => {
+      res.status(201).redirect("/dashboard?user=admin");
     })
-    .catch((err) => res.status(422).send("Cannot delete the games id"));
-});
+    .catch(() => res.status(422).send("Cannot delete the games id"))
+);
 
 // HANDLE REDIRECTION READ if any access this page
-app.get("/dashboard/*", (req, res) => {
-  User.findAll().then((user) => res.status(200).redirect("/dashboard"));
-});
+app.get("/dashboard/*", (req, res) =>
+  User.findAll().then(() => res.status(200).redirect("/dashboard?user=admin"))
+);
 
 module.exports = app;
