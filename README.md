@@ -40,6 +40,6 @@ API can be accessed from such endpoints:
 
 ### CHORE
 
-- Update button on user profile table
+- Send update on user profile table
 - Send something after games finished
 - Add history dashboard
