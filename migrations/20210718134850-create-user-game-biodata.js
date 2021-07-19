@@ -20,9 +20,11 @@ module.exports = {
       },
       full_name: {
         type: Sequelize.STRING,
+        defaultValue: "",
       },
       email: {
         type: Sequelize.STRING,
+        defaultValue: "",
       },
       createdAt: {
         allowNull: false,

@@ -20,9 +20,11 @@ module.exports = {
       },
       win: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       lose: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

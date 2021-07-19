@@ -14,7 +14,7 @@ app.post("/v1/users", (req, res) =>
     password: req.body.password,
   })
     .then((user) => res.status(201).json(user))
-    .catch(() => res.status(422).send("Cannot create users"))
+    .catch(() => res.status(422).send("Cannot create user"))
 );
 
 // READ /user
@@ -42,8 +42,8 @@ app.put("/v1/users/edit/:id", (req, res) =>
     },
     { where: { id: req.params.id } }
   )
-    .then((user) => res.status(201).json(user))
-    .catch(() => res.status(422).send("Cannot update the games"))
+    .then((user) => res.status(201).json("User updated !"))
+    .catch(() => res.status(422).send("Cannot update the user"))
 );
 
 // Delete /user/:id
@@ -54,7 +54,7 @@ app.delete("/v1/users/delete/:id", (req, res) =>
         message: `Users id of ${req.params.id} has been deleted!`,
       })
     )
-    .catch(() => res.status(422).send("Cannot delete the games id"))
+    .catch(() => res.status(422).send("Cannot delete the user id"))
 );
 
 // READ /user/profile
@@ -136,7 +136,7 @@ app.get("/v1/history/:id", (req, res) =>
   )
 );
 
-// API V2, already include join 3 tables but only to CREATE and READ
+// API V2
 // CREATE /user
 app.post("/v2/users", (req, res) =>
   User_game.create({
@@ -146,17 +146,13 @@ app.post("/v2/users", (req, res) =>
     .then((user_game) => {
       User_game_biodata.create({
         user_id: user_game.get("id"),
-        full_name: req.body.full_name,
-        email: req.body.email,
       });
       User_game_history.create({
         user_id: user_game.get("id"),
-        win: req.body.win || 0,
-        lose: req.body.lose || 0,
       });
     })
     .then((user) => res.status(201).json(user))
-    .catch(() => res.status(422).send("Cannot create users"))
+    .catch(() => res.status(422).send("Cannot create user"))
 );
 
 // READ /user
@@ -194,6 +190,46 @@ app.get("/v2/users/:id", (req, res) =>
   }).then((user) =>
     user ? res.status(200).json(user) : res.status(200).send("ID not found")
   )
+);
+
+// Update /users/edit/:id
+app.put("/v2/users/edit/:id", (req, res) =>
+  User_game.update(
+    {
+      username: req.body.username,
+      password: req.body.password,
+    },
+    { where: { id: req.params.id } }
+  )
+    .then(() => {
+      User_game_biodata.update(
+        {
+          full_name: req.body.full_name,
+          email: req.body.email,
+        },
+        { where: { user_id: req.params.id } }
+      );
+      User_game_history.update(
+        {
+          win: req.body.win,
+          lose: req.body.lose,
+        },
+        { where: { user_id: req.params.id } }
+      );
+    })
+    .then((user) => res.status(201).json(user))
+    .catch(() => res.status(422).send("Cannot update user"))
+);
+
+// Delete /users/delete/:id
+app.delete("/v2/users/delete/:id", (req, res) =>
+  User_game.destroy({ where: { id: req.params.id } })
+    .then(() =>
+      res.status(201).json({
+        message: `Users id of ${req.params.id} has been deleted!`,
+      })
+    )
+    .catch(() => res.status(422).send("Cannot delete the user id"))
 );
 
 module.exports = app;
