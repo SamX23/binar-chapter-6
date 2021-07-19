@@ -6,6 +6,7 @@ const {
   User_game_history,
 } = require("../models");
 
+// API V1
 // CREATE /user
 app.post("/v1/users", (req, res) =>
   User_game.create({
@@ -38,7 +39,6 @@ app.put("/v1/users/edit/:id", (req, res) =>
     {
       username: req.body.username,
       password: req.body.password,
-      score: req.body.score,
     },
     { where: { id: req.params.id } }
   )
@@ -74,6 +74,23 @@ app.get("/v1/profile", (req, res) =>
     .catch((err) => res.status(500).send("Error : " + err))
 );
 
+// READ /user/profile
+app.get("/v1/profile", (req, res) =>
+  User_game_biodata.findAll({
+    include: [
+      {
+        model: User_game,
+      },
+    ],
+  })
+    .then((row) =>
+      row.length == 0
+        ? res.status(200).send("No users yet!")
+        : res.status(200).json(row)
+    )
+    .catch((err) => res.status(500).send("Error : " + err))
+);
+
 // READ /user/profile/:id
 app.get("/v1/profile/:id", (req, res) =>
   User_game_biodata.findOne({
@@ -88,7 +105,7 @@ app.get("/v1/profile/:id", (req, res) =>
   )
 );
 
-// READ /user/profile
+// READ /user/history
 app.get("/v1/history", (req, res) =>
   User_game_history.findAll({
     include: [
@@ -105,13 +122,73 @@ app.get("/v1/history", (req, res) =>
     .catch((err) => res.status(500).send("Error : " + err))
 );
 
-// READ /user/profile/:id
+// READ /user/history/:id
 app.get("/v1/history/:id", (req, res) =>
   User_game_history.findOne({
     where: { user_id: req.params.id },
     include: [
       {
         model: User_game,
+      },
+    ],
+  }).then((user) =>
+    user ? res.status(200).json(user) : res.status(200).send("ID not found")
+  )
+);
+
+// API V2, already include join 3 tables but only to CREATE and READ
+// CREATE /user
+app.post("/v2/users", (req, res) =>
+  User_game.create({
+    username: req.body.username,
+    password: req.body.password,
+  })
+    .then((user_game) => {
+      User_game_biodata.create({
+        user_id: user_game.get("id"),
+        full_name: req.body.full_name,
+        email: req.body.email,
+      });
+      User_game_history.create({
+        user_id: user_game.get("id"),
+        win: req.body.win || 0,
+        lose: req.body.lose || 0,
+      });
+    })
+    .then((user) => res.status(201).json(user))
+    .catch(() => res.status(422).send("Cannot create users"))
+);
+
+// READ /user
+app.get("/v2/users", (req, res) =>
+  User_game.findAll({
+    include: [
+      {
+        model: User_game_biodata,
+      },
+      {
+        model: User_game_history,
+      },
+    ],
+  }).then((user) =>
+    user.length == 0
+      ? res.status(200).send("No users yet!")
+      : res.status(200).json(user)
+  )
+);
+
+// READ /user/:id
+app.get("/v2/users/:id", (req, res) =>
+  User_game.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      {
+        model: User_game_biodata,
+      },
+      {
+        model: User_game_history,
       },
     ],
   }).then((user) =>
