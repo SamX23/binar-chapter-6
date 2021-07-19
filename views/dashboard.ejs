@@ -12,23 +12,35 @@
     />
   </head>
   <body>
-    <nav class="nav d-flex justify-content-between w-100 py-2 px-5">
-      <a
-        class="btn btn-primary text-light text-decoration-none"
-        href="/?user=admin"
-        >Back</a
-      >
-      <a class="btn btn-secondary text-light text-decoration-none" href="/"
-        >Logout</a
-      >
-    </nav>
+    <div class="container">
+      <nav class="nav d-flex justify-content-between w-100 py-2">
+        <a
+          class="btn btn-primary text-light text-decoration-none"
+          href="/?user=admin"
+          >Back</a
+        >
+        <a class="btn btn-secondary text-light text-decoration-none" href="/"
+          >Logout</a
+        >
+      </nav>
+    </div>
     <main>
       <div class="container py-5">
         <div class="row">
           <h1>Dashboard</h1>
           <p>Hello, Admin!</p>
-          <% if(userexist) { %>
+          <% if(msg == 'error') { %>
+          <div class="alert alert-danger" role="alert">
+            Oops! please try again
+          </div>
+          <% } %> <% if(msg == 'exist') { %>
           <div class="alert alert-danger" role="alert">Username exist !</div>
+          <% } %> <% if(msg == 'created') { %>
+          <div class="alert alert-success" role="alert">Username Created !</div>
+          <% } %> <% if(msg == 'updated') { %>
+          <div class="alert alert-success" role="alert">Username Updated !</div>
+          <% } %> <% if(msg == 'deleted') { %>
+          <div class="alert alert-success" role="alert">Username Deleted !</div>
           <% } %>
         </div>
         <div class="row">
@@ -55,16 +67,16 @@
               >
                 <thead class="table-primary text-center">
                   <tr>
-                    <th>Id</th>
+                    <th>No.</th>
                     <th>Username</th>
                     <th>Password</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% if(user.length) { %> <% user.map(item => { %>
+                  <% if(user.length) { %> <% user.map((item, index) => { %>
                   <tr>
-                    <th><%= item.id %></th>
+                    <th class="text-center"><%= index+1 %></th>
                     <th><%= item.username %></th>
                     <th>*********</th>
                     <th class="text-center">
@@ -90,7 +102,11 @@
                       </a>
                     </th>
                   </tr>
-                  <% }) %> <% } %>
+                  <% }) %> <% } else { %>
+                  <tr>
+                    <th class="text-center" colspan="4">Data still empty</th>
+                  </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>

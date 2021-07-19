@@ -11,74 +11,82 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="d-flex" style="min-height: 100vh">
-    <main class="m-auto" style="min-width: 60rem">
-      <div class="container">
+  <body>
+    <div class="container">
+      <nav class="nav d-flex justify-content-between w-100 py-2">
+        <a
+          class="btn btn-primary text-light text-decoration-none"
+          href="/?user=<%= username %>"
+          >Back</a
+        >
+        <a class="btn btn-secondary text-light text-decoration-none" href="/"
+          >Logout</a
+        >
+      </nav>
+    </div>
+    <main>
+      <div class="container py-5">
         <div class="row">
-          <h1>Dashboard</h1>
-          <p>Hello, User!</p>
+          <h1>User Profile</h1>
+          <p>Hello, <%= username %></p>
+          <% if(msg) { %>
+          <div class="alert alert-success" role="alert">
+            Successfully updated!
+          </div>
+          <% } %>
         </div>
         <div class="row">
           <div class="col">
-            <div class="d-flex justify-content-between">
-              <h2>User Table</h2>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addModal"
+            <div class="table-responsive">
+              <table
+                class="
+                  table table-hover table-light table-striped
+                  align-middle
+                  bordered
+                  my-2
+                "
               >
-                Create
-              </button>
+                <thead class="table-primary text-center">
+                  <tr>
+                    <th>No.</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(user.length) { %> <% user.map((item, index) => { %>
+                  <tr>
+                    <th class="text-center"><%= index+1 %></th>
+                    <th><%= item.full_name %></th>
+                    <th><%= item.user_id %></th>
+                    <th class="text-center">
+                      <a
+                        type="button"
+                        class="btn btn-warning editButton disabled"
+                        data-bs-toggle="modal"
+                        data-bs-target="#updateModal"
+                        data-bs-id="<%= item.user_id %>"
+                        href="../dashboard/edit/<%= item.user_id %>"
+                      >
+                        Update
+                      </a>
+                    </th>
+                  </tr>
+                  <% }) %> <% } else { %>
+                  <tr>
+                    <th class="text-center" colspan="4">Data still empty</th>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
-            <table class="table table-hover bordered">
-              <title>User Game Table</title>
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>lorem</th>
-                  <th>lorem</th>
-                  <th>lorem</th>
-                  <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning editButton"
-                      data-bs-toggle="modal"
-                      data-bs-target="#updateModal"
-                      data-bs-id="user-id"
-                      href="../dashboard-user/edit/user-id"
-                    >
-                      Update
-                    </a>
-                    <a
-                      type="button"
-                      class="btn btn-danger deleteButton"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteModal"
-                      data-bs-id="user-id"
-                      href="../dashboard-user/delete/user-id"
-                    >
-                      Delete
-                    </a>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
     </main>
   </body>
-  <%- include("components/update.ejs"); %> <%- include("components/delete.ejs");
-  %>
-  <script src="/scripts/dashboard.js"></script>
+  <%- include("components/update.ejs"); %>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

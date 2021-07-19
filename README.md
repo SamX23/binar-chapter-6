@@ -21,7 +21,16 @@ Make sure you have installed sequelize-cli
 
 API can be accessed from such endpoints:
 
+#### API V1
+
 - Get all users : GET <code>/v1/users</code>
 - Create a user : POST <code>/v1/users</code>
 - Edit a user : PUT <code>/v1/users/edit/:id</code>
 - Delete a user : DELETE <code>/v1/users/delete/:id</code>
+
+#### API V2
+
+- Get all users, profile and history : GET <code>/v2/users</code>
+- Create a user : POST <code>/v2/users</code>
+- Edit a user : PUT <code>/v2/users/edit/:id</code>
+- Delete a user : DELETE <code>/v2/users/delete/:id</code>

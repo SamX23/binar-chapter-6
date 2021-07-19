@@ -6,6 +6,17 @@ const {
   User_game_history,
 } = require("../models");
 
+/**
+ * There are 2 version of API
+ *
+ * /v1/ => simple CRUD for user_game table
+ * /v2/ => CRUD with joined 3 tables using user_id as Parent Key.
+ *          - user_game
+ *          - user_game_biodata
+ *          - user_game_history
+ *
+ */
+
 // API V1
 // CREATE /user
 app.post("/v1/users", (req, res) =>
