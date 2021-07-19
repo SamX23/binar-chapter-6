@@ -16,6 +16,9 @@ Make sure you have installed sequelize-cli
 - <code>sequelize db:migrate</code>
 - <code>sequelize db:seed:all</code>
 - <code>yarn start</code>
+- Login as admin to access admin dashboard
+  - Username : admin
+  - Passwrod : admin
 
 ### API
 
@@ -34,3 +37,9 @@ API can be accessed from such endpoints:
 - Create a user : POST <code>/v2/users</code>
 - Edit a user : PUT <code>/v2/users/edit/:id</code>
 - Delete a user : DELETE <code>/v2/users/delete/:id</code>
+
+### CHORE
+
+- Update button on user profile table
+- Send something after games finished
+- Add history dashboard
