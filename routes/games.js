@@ -5,7 +5,7 @@ const app = express.Router();
 app.get("/games", (req, res, next) =>
   res.render("games", {
     title: "Try Out The Games",
-    name: "Player",
+    name: req.query.user,
   })
 );
 

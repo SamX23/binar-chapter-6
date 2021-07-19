@@ -39,7 +39,7 @@ app.post("/dashboard/add", async (req, res) => {
       username: req.body.username,
     },
   })
-    .then((user) => {
+    .then((user) =>
       !user
         ? User_game.create(userData)
             .then((user_game) => {
@@ -54,8 +54,8 @@ app.post("/dashboard/add", async (req, res) => {
             .catch((err) => {
               res.status(422).send("Cannot create user:", err);
             })
-        : res.redirect("/dashboard?user=admin&msg=exist");
-    })
+        : res.redirect("/dashboard?user=admin&msg=exist")
+    )
     .catch((err) => res.send("ERROR: " + err));
 });
 

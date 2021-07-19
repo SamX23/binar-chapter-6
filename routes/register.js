@@ -24,7 +24,7 @@ app.post("/register", async (req, res) => {
       username: req.body.username,
     },
   })
-    .then((user) => {
+    .then((user) =>
       !user
         ? User_game.create(userData)
             .then((user_game) => {
@@ -37,8 +37,8 @@ app.post("/register", async (req, res) => {
               res.status(201).redirect("/?user=" + user_game.username);
             })
             .catch((err) => res.status(422).send("Cannot create users:", err))
-        : res.redirect("/register?msg=userexist");
-    })
+        : res.redirect("/register?msg=userexist")
+    )
     .catch((err) => res.send("ERROR: " + err));
 });
 

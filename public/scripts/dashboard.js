@@ -17,3 +17,9 @@ for (let i = 0; i < deleteButton.length; i++) {
     deleteForm.setAttribute("action", `/dashboard/delete/${data}`);
   };
 }
+
+const alert = document.querySelector(".alert");
+
+setTimeout(() => {
+  alert.style.display = "none";
+}, 2000);
