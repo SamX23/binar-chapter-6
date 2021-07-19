@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const user_game = require("./user_game");
 module.exports = (sequelize, DataTypes) => {
   class User_game_biodata extends Model {
     /**
@@ -10,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User_game_biodata.belongsTo(models.User_game, {
+        foreignKey: "user_id",
+        onDelete: "CASCADE",
+      });
     }
   }
   User_game_biodata.init(
@@ -23,9 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User_game_biodata",
     }
   );
-  User_game_biodata.belongsTo(user_game, {
-    foreignKey: "user_id",
-    onDelete: "CASCADE",
-  });
+
   return User_game_biodata;
 };
