@@ -48,32 +48,32 @@
               >
                 <thead class="table-primary text-center">
                   <tr>
-                    <th>No.</th>
+                    <th>User ID</th>
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% if(user.length) { %> <% user.map((item, index) => { %>
+                  <% if(user != "") { %>
                   <tr>
-                    <th class="text-center"><%= index+1 %></th>
-                    <th><%= item.full_name %></th>
-                    <th><%= item.user_id %></th>
+                    <th><%= user.user_id %></th>
+                    <th><%= user.full_name %></th>
+                    <th><%= user.email %></th>
                     <th class="text-center">
                       <a
                         type="button"
                         class="btn btn-warning editButton disabled"
                         data-bs-toggle="modal"
                         data-bs-target="#updateModal"
-                        data-bs-id="<%= item.user_id %>"
-                        href="../dashboard/edit/<%= item.user_id %>"
+                        data-bs-id="<%= user.user_id %>"
+                        href="../dashboard/edit/<%= user.user_id %>"
                       >
                         Update
                       </a>
                     </th>
                   </tr>
-                  <% }) %> <% } else { %>
+                  <% } else { %>
                   <tr>
                     <th class="text-center" colspan="4">Data still empty</th>
                   </tr>

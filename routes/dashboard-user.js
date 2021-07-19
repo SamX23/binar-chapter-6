@@ -14,7 +14,7 @@ app.get("/dashboard-user", (req, res) => {
     result
       ? User_game_biodata.findOne({
           where: {
-            user_id: result.get("id"),
+            user_id: 1,
           },
         }).then((user) =>
           res.status(200).render("dashboard-user", {
